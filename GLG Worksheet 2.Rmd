@@ -1,0 +1,140 @@
+---
+title: "GLG Worksheet 2: Absolute Basics of Programming in R"
+output: html_notebook
+---
+
+This is an R Markdown Notebook. When you execute code within the notebook, the results appear beneath the code. 
+Execute a chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+Last week we passed simple commands in R to create charts of data. When you perform multi-step analysis, automate your analysis, or want to carry out a non-standard calculation you need to know a bit about writing your own code in R.
+
+The very basics of programming in R: Pay careful attention to syntax or what each term and symbol does in the code.
+```{r}
+print("hello world")
+
+text.string <- "hello Haverford" # this is how you assign a variable. Any text after a # is a comment that the program ignores.
+print(text.string)
+```
+```{r}
+#assign some text to a variable here, then print that text.
+```
+
+
+
+Boolean operators and comparators (notice the syntax for equals, does not equal, greater/less than):
+```{r}
+b1 <- 1 == 2 | 2 == 2 #operator for OR, returns TRUE if either statement is true
+print(b1)
+
+b2 <- 1 > 2 & 2 & 1 #operator for AND, returns TRUE if both statements are true
+print(b2)
+
+b3 <- ! 1 == 1 #operator for NOT, returns logical opposite of statement
+print(b3)
+```
+
+```{r}
+#write your own code here using the form above which tests two statements. You can also compare strings of characters, but they need to be in "parentheses".
+```
+
+
+
+If statements (with a few new operators!):
+```{r}
+if (20 <= 20){ #brackets denote the beginning and end of the body of the statement
+  print("True")
+} #look at that bracket!
+
+if (20 != 20){
+  print("True")
+}
+```
+
+```{r}
+#write your own IF statement here which prints "Haverford 2021" when the a condition (you decide) is true.
+```
+
+
+
+Let's consolidate with if/else statements. Else statement carry out operations when the condition in an if statement is not met. You can nest if and else statements to carry out complicated logic.
+```{r}
+you.are <- 16
+if (you.are == 17){
+  print("True")
+} else {
+  print("I am seventeen going on eighteen")
+}
+```
+```{r}
+#here is space for you to write your own if statement which prints text.
+```
+
+
+
+Here is a simple for loop. For loops carry out an operation for each increment of a variable in a vector.
+```{r}
+dim(iris) #the famous iris dataset, dim() gets the dimensions of a dataframe or other
+sepal <- 0 #initialize the sepal variable
+
+for (i in 1:10) {
+  sepal[i] <- iris$Sepal.Length[i] #the [i] selets the row of the vector which corresponds to the value of i. The $ command lets us select one column of the dataset by its name.
+  print(sepal[i])}
+```
+```{r}
+#write your own simple for loop which prints the values of iris$Sepal.Width for rows 25 through 35.
+```
+
+
+
+And a basic while loop. This loop evaluates until j passes the value 90. In the body of the function j is assigned a value from a random sample between 1 and 100. 
+```{r}
+j <- 1
+
+while (j < 90) {
+  j <- sample(1:100, 1)
+}
+print(j) #what is the meaning of this output? We will skip writing your own while loop.
+```
+
+
+
+Most functions you will use in R are "vectorized functions" which are more simple and efficient than loops, although their architecture is more closed.
+When you use something like plot(x, y) you are calling a base R function which takes the arguments x and y.
+
+We can define and use our own functions. Let's make a function the evaluate a Z score, which you can read more about here: https://en.wikipedia.org/wiki/Standard_score
+```{r}
+fun.z.score <- function(data.vector, datum.point) {
+  data.mean <- mean(data.vector)
+  data.stdev <- sd(data.vector)
+  score <- (datum.point - data.mean) / data.stdev
+  print(score)
+}
+
+data.vector <- rnorm(n = 250, mean = 500, sd = 100) #generate random normally distributed data
+datum.point <- 100 #a datum point to test against the distribution we just generated
+
+fun.z.score(data.vector = data.vector, datum.point = datum.point)
+```
+Multiple R wrappers are available for functions which can execute commands using vectors, lists, or matrices of variables. For reference, they include: lapply(), sapply(), and mapply().
+
+Use the chunk space below to build your own function which prints the maximum, minimum, and mean of a vector of data. Then use it to describe the vector "iris$Petal.Length". You may need to look up the appropriate R functions online. 
+```{r}
+#your code here
+```
+
+
+
+Let's finish today by reviewing some plotting.
+Take a look again at the iris data set.
+```{r}
+summary(iris) #datasets::iris
+```
+
+From last session you should remember the fundamentals of ggplot2. Here is the useful overview sheet provided by the developer again for reference: https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf
+
+Build a minimum of two scatter plots which map two length or width variables on to the x and y axes and color the points by species. You can use either geom_point() or geom_jitter(). Be sure to label your chart with a title and x and y axes.
+
+```{r}
+#build scatterplots here
+```
+
